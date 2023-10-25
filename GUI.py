@@ -38,10 +38,10 @@ class MyGUI:
         button_4 = tk.Button(buttonframe, text="Remove")
         button_4.grid(row=1, column=0, sticky="news")
 
-        button_5 = tk.Button(buttonframe, text="Sort")
+        button_5 = tk.Button(buttonframe, text="Sort", command= self.sort_list)
         button_5.grid(row=1, column=1, sticky="news")
 
-        button_6 = tk.Button(buttonframe, text="List")
+        button_6 = tk.Button(buttonframe, text="List", command=self.show_list)
         button_6.grid(row=1, column=2, sticky="news")
 
 
@@ -68,5 +68,15 @@ class MyGUI:
             print("Item not found")
             label = tk.Label(self.window, text="Item not found")
             label.pack()
+
+    def sort_list(self):
+        fruits_and_vegetables_sorted = sorted(fruits_and_vegetables)
+        label_list_sorted = tk.Label(self.window, wraplength=500,width=200,text=str(fruits_and_vegetables_sorted).translate(({ord(i): None for i in "[]''"})))
+        label_list_sorted.pack()
+
+    def show_list(self):
+        label_list = tk.Label(self.window, wraplength=500,width=200,text=str(fruits_and_vegetables).translate(({ord(i): None for i in "[]''"})))
+        label_list.pack()
+        
 MyGUI()
 
