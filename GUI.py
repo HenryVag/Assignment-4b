@@ -5,6 +5,8 @@ class MyGUI:
 
     def __init__(self):
         
+        self.user_in = ""
+        self.to_be_added = ""
         """Defines window"""
         self.window = tk.Tk()
         self.window.geometry("500x500")
@@ -32,7 +34,7 @@ class MyGUI:
         button_2 = tk.Button(buttonframe, text="Search", command = self.search_list)
         button_2.grid(row=0, column=1, sticky="news")
 
-        button_3 = tk.Button(buttonframe, text="Add")
+        button_3 = tk.Button(buttonframe, text="Add", command= self.add_to_list)
         button_3.grid(row=0, column=2, sticky="news")
 
         button_4 = tk.Button(buttonframe, text="Remove")
@@ -54,20 +56,34 @@ class MyGUI:
         self.window.destroy()
 
     def search_list(self):
-        user_input = input("Search:")
 
+        input_field = tk.Entry(self.window)
+        input_field.pack()
+        ok_button = tk.Button(self.window, text="Search", command= self.start_search)
+        ok_button.pack()
+            
+        self.user_in = input_field
+
+    def start_search(self):
+
+        user_in = self.user_in.get().strip()
         
-        if user_input in fruits_and_vegetables:
+        
+        if user_in in fruits_and_vegetables:
             print("Found item")
-            label2 = tk.Label(self.window, text="Found item")
+            label2 = tk.Label(self.window, text="Found item: " + str(user_in))
             label2.pack()
                 
         
         
-        if user_input not in fruits_and_vegetables:
+        if  user_in not in fruits_and_vegetables:
             print("Item not found")
-            label = tk.Label(self.window, text="Item not found")
+            label = tk.Label(self.window, text="Item: "+ str(user_in) + " was not found")
             label.pack()
+            
+
+        
+
 
     def sort_list(self):
         fruits_and_vegetables_sorted = sorted(fruits_and_vegetables)
@@ -77,6 +93,27 @@ class MyGUI:
     def show_list(self):
         label_list = tk.Label(self.window, wraplength=500,width=200,text=str(fruits_and_vegetables).translate(({ord(i): None for i in "[]''"})))
         label_list.pack()
+
+    def add_to_list(self):
+        input_field_add = tk.Entry()
+        input_field_add.pack()
+
+        to_be_added = input_field_add.get().strip()
+       
+        ok_button = tk.Button(self.window, text="Add item", command= fruits_and_vegetables.append(str(to_be_added)))
+        ok_button.pack()
         
+
+        
+
+        
+        
+    
+        
+        
+        
+
+
+
 MyGUI()
 
