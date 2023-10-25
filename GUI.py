@@ -1,4 +1,5 @@
 import tkinter as tk
+from assignment_4b import fruits_and_vegetables
 
 class MyGUI:
 
@@ -28,7 +29,7 @@ class MyGUI:
         button_1 = tk.Button(buttonframe, text="Stop Application", command = self.stop_app)
         button_1.grid(row=0, column=0, sticky="news")
 
-        button_2 = tk.Button(buttonframe, text="Search")
+        button_2 = tk.Button(buttonframe, text="Search", command = self.search_list)
         button_2.grid(row=0, column=1, sticky="news")
 
         button_3 = tk.Button(buttonframe, text="Add")
@@ -52,5 +53,20 @@ class MyGUI:
         
         self.window.destroy()
 
+    def search_list(self):
+        user_input = input("Search:")
+
+        
+        if user_input in fruits_and_vegetables:
+            print("Found item")
+            label2 = tk.Label(self.window, text="Found item")
+            label2.pack()
+                
+        
+        
+        if user_input not in fruits_and_vegetables:
+            print("Item not found")
+            label = tk.Label(self.window, text="Item not found")
+            label.pack()
 MyGUI()
 
