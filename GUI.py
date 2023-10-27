@@ -1,12 +1,14 @@
 import tkinter as tk
 from assignment_4b import fruits_and_vegetables
 
+
 class MyGUI:
 
     def __init__(self):
         
         self.user_in = ""
         self.to_be_added = ""
+        self.to_be_deleted = ""
         """Defines window"""
         self.window = tk.Tk()
         self.window.geometry("500x500")
@@ -37,7 +39,7 @@ class MyGUI:
         button_3 = tk.Button(buttonframe, text="Add", command= self.add_to_list)
         button_3.grid(row=0, column=2, sticky="news")
 
-        button_4 = tk.Button(buttonframe, text="Remove")
+        button_4 = tk.Button(buttonframe, text="Remove", command= self.gui_remove_from_list)
         button_4.grid(row=1, column=0, sticky="news")
 
         button_5 = tk.Button(buttonframe, text="Sort", command= self.sort_list)
@@ -57,33 +59,37 @@ class MyGUI:
 
     def search_list(self):
 
-        input_field = tk.Entry(self.window)
-        input_field.pack()
-        ok_button = tk.Button(self.window, text="Search", command= self.start_search)
-        ok_button.pack()
+        self.input_field = tk.Entry(self.window)
+        self.input_field.pack()
+        self.ok_button = tk.Button(self.window, text="Search", command= self.start_search)
+        self.ok_button.pack()
             
-        self.user_in = input_field
+        self.user_in = self.input_field
 
     def start_search(self):
 
-        user_in = self.user_in.get().strip()
+        self.user_in = self.user_in.get().strip()
         
         
-        if user_in in fruits_and_vegetables:
+        if self.user_in in fruits_and_vegetables:
             print("Found item")
-            label2 = tk.Label(self.window, text="Found item: " + str(user_in))
+            label2 = tk.Label(self.window, text="Found item: " + str(self.user_in))
             label2.pack()
                 
         
         
-        if  user_in not in fruits_and_vegetables:
+        if  self.user_in not in fruits_and_vegetables and self.user_in != "":
             print("Item not found")
-            label = tk.Label(self.window, text="Item: "+ str(user_in) + " was not found")
+            label = tk.Label(self.window, text="Item: "+ str(self.user_in) + " was not found")
             label.pack()
+
+        if  self.user_in == "":
+            label = tk.Label(self.window, text="There is nothing to search with")
+            label.pack()
+
+        self.input_field.destroy()
+        self.ok_button.destroy()
             
-
-        
-
 
     def sort_list(self):
         fruits_and_vegetables_sorted = sorted(fruits_and_vegetables)
@@ -95,19 +101,60 @@ class MyGUI:
         label_list.pack()
 
     def add_to_list(self):
-        input_field_add = tk.Entry()
-        input_field_add.pack()
+        
+        self.input_field_add = tk.Entry()
+        self.input_field_add.pack()
 
-        self.to_be_added = input_field_add
+        self.to_be_added = self.input_field_add
        
-        ok_button = tk.Button(self.window, text="Add item", command= self.append_list)
-        ok_button.pack()
+        self.ok_button = tk.Button(self.window, text="Add item", command= self.append_list)
+        self.ok_button.pack()
 
     def append_list(self):
 
         addition = self.to_be_added.get().strip()
-        fruits_and_vegetables.append(addition)
+
+        self.ok_button.destroy()
+        self.input_field_add.destroy()
+
+        if addition != "":
+            fruits_and_vegetables.append(addition)
         
+        if addition == "":
+            no_add = tk.Label(text= "There is nothing to add")
+            no_add.pack()
+            
+        self.ok_button.destroy()
+        self.input_field_add.destroy()
+        
+    def gui_remove_from_list(self):
+
+        self.to_be_deleted_in = tk.Entry()
+        self.to_be_deleted_in.pack()
+
+        self.to_be_deleted = self.to_be_deleted_in
+
+        self.delete_button = tk.Button(text="Delete", command = self.remove_from_list)
+        self.delete_button.pack()
+
+    def remove_from_list(self):
+        
+        to_remove = self.to_be_deleted.get().strip()
+        if to_remove in fruits_and_vegetables:
+            fruits_and_vegetables.remove(to_remove)
+            in_list = tk.Label(text="Item removed succesfully")
+            in_list.pack()
+        
+        elif to_remove not in fruits_and_vegetables:
+            not_in_list = tk.Label(text= "Item not in list")
+            not_in_list.pack()
+
+        self.delete_button.destroy()
+        self.to_be_deleted_in.destroy()
+
+
+
+
 
         
 
