@@ -98,10 +98,15 @@ class MyGUI:
         input_field_add = tk.Entry()
         input_field_add.pack()
 
-        to_be_added = input_field_add.get().strip()
+        self.to_be_added = input_field_add
        
-        ok_button = tk.Button(self.window, text="Add item", command= fruits_and_vegetables.append(str(to_be_added)))
+        ok_button = tk.Button(self.window, text="Add item", command= self.append_list)
         ok_button.pack()
+
+    def append_list(self):
+
+        addition = self.to_be_added.get().strip()
+        fruits_and_vegetables.append(addition)
         
 
         
