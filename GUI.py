@@ -51,6 +51,9 @@ class MyGUI:
 
         buttonframe.pack(fill='x')
 
+        self.labelframe = tk.Frame(self.window, width=200, height=410)
+        self.labelframe.pack(fill='x')
+
         self.window.mainloop()
 
     def stop_app(self):
@@ -59,55 +62,72 @@ class MyGUI:
 
     def search_list(self):
 
-        self.input_field = tk.Entry(self.window)
+        self.clear_labelframe()
+        
+        self.input_field = tk.Entry(self.labelframe)
         self.input_field.pack()
-        self.ok_button = tk.Button(self.window, text="Search", command= self.start_search)
+        self.ok_button = tk.Button(self.labelframe, text="Search", command= self.start_search)
         self.ok_button.pack()
             
         self.user_in = self.input_field
 
     def start_search(self):
 
+        
+        
         self.user_in = self.user_in.get().strip()
         
+        if 1 <= len(self.user_in) <= 25 :
         
-        if self.user_in in fruits_and_vegetables:
-            print("Found item")
-            label2 = tk.Label(self.window, text="Found item: " + str(self.user_in))
-            label2.pack()
-                
-        
-        
-        if  self.user_in not in fruits_and_vegetables and self.user_in != "":
-            print("Item not found")
-            label = tk.Label(self.window, text="Item: "+ str(self.user_in) + " was not found")
-            label.pack()
+            if self.user_in in fruits_and_vegetables:
+                print("Found item")
+                label2 = tk.Label(self.labelframe, text="Found item: " + str(self.user_in))
+                label2.pack()
+                    
+            
+            
+            if  self.user_in not in fruits_and_vegetables and self.user_in != "":
+                print("Item not found")
+                label = tk.Label(self.labelframe, text="Item: "+ str(self.user_in) + " was not found")
+                label.pack()
 
         if  self.user_in == "":
-            label = tk.Label(self.window, text="There is nothing to search with")
+            label = tk.Label(self.labelframe, text="There is nothing to search with")
             label.pack()
+        
+        if len(self.user_in) >= 26:
+            in_char = tk.Label(self.labelframe, text= "Incorrect amount of characters")
+            in_char.pack()
 
         self.input_field.destroy()
         self.ok_button.destroy()
             
 
     def sort_list(self):
+
+        self.clear_labelframe()
+
         fruits_and_vegetables_sorted = sorted(fruits_and_vegetables)
-        label_list_sorted = tk.Label(self.window, wraplength=500,width=200,text=str(fruits_and_vegetables_sorted).translate(({ord(i): None for i in "[]''"})))
+        label_list_sorted = tk.Label(self.labelframe, wraplength=500,width=200,text=str(fruits_and_vegetables_sorted).translate(({ord(i): None for i in "[]''"})))
         label_list_sorted.pack()
 
     def show_list(self):
-        label_list = tk.Label(self.window, wraplength=500,width=200,text=str(fruits_and_vegetables).translate(({ord(i): None for i in "[]''"})))
+
+        self.clear_labelframe()
+
+        label_list = tk.Label(self.labelframe, wraplength=500,width=200,text=str(fruits_and_vegetables).translate(({ord(i): None for i in "[]''"})))
         label_list.pack()
 
     def add_to_list(self):
+
+        self.clear_labelframe()
         
-        self.input_field_add = tk.Entry()
+        self.input_field_add = tk.Entry(self.labelframe)
         self.input_field_add.pack()
 
         self.to_be_added = self.input_field_add
        
-        self.ok_button = tk.Button(self.window, text="Add item", command= self.append_list)
+        self.ok_button = tk.Button(self.labelframe, text="Add item", command= self.append_list)
         self.ok_button.pack()
 
     def append_list(self):
@@ -117,40 +137,60 @@ class MyGUI:
         self.ok_button.destroy()
         self.input_field_add.destroy()
 
-        if addition != "":
-            fruits_and_vegetables.append(addition)
-        
+        additionlen = len(addition)
+        if 1 <= additionlen <= 25 and addition.isalpha() == True:
+            if addition != "" and (additionlen <= 25):
+                fruits_and_vegetables.append(addition)
+                added = tk.Label(self.labelframe,text= "Added "+str(addition)+" succesfully")
+                added.pack()
+            
         if addition == "":
             no_add = tk.Label(text= "There is nothing to add")
             no_add.pack()
-            
+        
+        if addition.isalpha() == False:
+            in_char = tk.Label(self.labelframe, text= "Incorrect amount or type of characters")
+            in_char.pack()
+        
         self.ok_button.destroy()
         self.input_field_add.destroy()
         
     def gui_remove_from_list(self):
 
-        self.to_be_deleted_in = tk.Entry()
+        self.clear_labelframe()
+
+        self.to_be_deleted_in = tk.Entry(self.labelframe)
         self.to_be_deleted_in.pack()
 
         self.to_be_deleted = self.to_be_deleted_in
 
-        self.delete_button = tk.Button(text="Delete", command = self.remove_from_list)
+        self.delete_button = tk.Button(self.labelframe,text="Delete",command = self.remove_from_list)
         self.delete_button.pack()
 
     def remove_from_list(self):
         
         to_remove = self.to_be_deleted.get().strip()
-        if to_remove in fruits_and_vegetables:
-            fruits_and_vegetables.remove(to_remove)
-            in_list = tk.Label(text="Item removed succesfully")
-            in_list.pack()
-        
-        elif to_remove not in fruits_and_vegetables:
-            not_in_list = tk.Label(text= "Item not in list")
-            not_in_list.pack()
+
+        if 1 <= len(to_remove) <= 25:
+            if to_remove in fruits_and_vegetables:
+                fruits_and_vegetables.remove(to_remove)
+                in_list = tk.Label(self.labelframe, text="Item removed succesfully")
+                in_list.pack()
+            
+            elif to_remove not in fruits_and_vegetables:
+                not_in_list = tk.Label(self.labelframe, text= "Item not in list")
+                not_in_list.pack()
+        else:
+            in_char = tk.Label(self.labelframe,text= "Incorrect amount of characters, please try again")
+            in_char.pack()
 
         self.delete_button.destroy()
         self.to_be_deleted_in.destroy()
+
+    def clear_labelframe(self):
+        if  self.labelframe != None:
+            for item in self.labelframe.winfo_children():
+                item.destroy()
 
 
 
