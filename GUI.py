@@ -174,24 +174,29 @@ class MyGUI:
 
         self.ok_button.destroy()
         self.input_field_add.destroy()
-
-        additionlen = len(addition)
-        if 1 <= additionlen <= 25 and addition.isalpha() == True:
-            if addition != "" and (additionlen <= 25):
-                fruits_and_vegetables.append(addition)
-                added = tk.Label(self.labelframe,
-                text= "Added "+str(addition)+" succesfully")
-                added.pack()
+        if addition not in fruits_and_vegetables:
+            additionlen = len(addition)
+            if 1 <= additionlen <= 25 and addition.isalpha() == True:
+                if addition != "" and (additionlen <= 25):
+                    fruits_and_vegetables.append(addition)
+                    added = tk.Label(self.labelframe,
+                    text= "Added "+str(addition)+" succesfully")
+                    added.pack()
+                
+            if addition == "":
+                no_add = tk.Label(text= "There is nothing to add")
+                no_add.pack()
             
-        if addition == "":
-            no_add = tk.Label(text= "There is nothing to add")
-            no_add.pack()
-        
-        if addition.isalpha() == False:
-            in_char = tk.Label(self.labelframe, 
-            text= "Incorrect amount or type of characters")
-            in_char.pack()
-        
+            if addition.isalpha() == False:
+                in_char = tk.Label(self.labelframe, 
+                text= "Incorrect amount or type of characters")
+                in_char.pack()
+            
+        if addition in fruits_and_vegetables:
+            in_lst = tk.Label(self.labelframe, 
+                text= "Item already in list")
+                in_lst.pack()
+    
         self.ok_button.destroy()
         self.input_field_add.destroy()
 
@@ -230,7 +235,7 @@ class MyGUI:
             label_empty = tk.Label(self.labelframe, text="List is empty")
             label_empty.pack()     
 
-        if len(to_remove) >= 26 :
+        if len(to_remove) > 26 :
             in_char = tk.Label(self.labelframe,
             text= "Incorrect amount of characters, please try again")
         
