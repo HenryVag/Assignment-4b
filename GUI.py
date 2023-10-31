@@ -225,7 +225,12 @@ class MyGUI:
                 not_in_list = tk.Label(self.labelframe, 
                 text= "Item not in list")
                 not_in_list.pack()
-        else:
+        
+        if fruits_and_vegetables == []:
+            label_empty = tk.Label(self.labelframe, text="List is empty")
+            label_empty.pack()     
+
+        if len(to_remove) >= 26 :
             in_char = tk.Label(self.labelframe,
             text= "Incorrect amount of characters, please try again")
         
