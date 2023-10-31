@@ -1,4 +1,6 @@
-import tkinter as tk
+#File name:list.py
+#Author: Henry Våg
+#Description: Contains list used in gui.py
 
 
 fruits_and_vegetables = ["Apple", "Banana", "Orange", "Strawberry", "Blueberry",

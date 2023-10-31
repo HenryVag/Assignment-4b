@@ -1,14 +1,20 @@
+#File name: gui.py
+#Author: Henry Våg
+#Description: Working GUI that can manipulate a list
+
 import tkinter as tk
-from assignment_4b import fruits_and_vegetables
+from list import fruits_and_vegetables
 
 
 class MyGUI:
 
     def __init__(self):
         
+        """Class variables"""
         self.user_in = ""
         self.to_be_added = ""
         self.to_be_deleted = ""
+
         """Defines window"""
         self.window = tk.Tk()
         self.window.geometry("500x500")
@@ -17,10 +23,6 @@ class MyGUI:
         """Defines label"""
         self.label = tk.Label(self.window, text = "Listomator")
         self.label.pack(padx = 10, pady = 10)
-        """
-        self.button = tk.Button(self.window, text = "test")
-        self.button.pack()
-        """
 
         """Functional buttonframe and buttons"""
 
@@ -51,15 +53,20 @@ class MyGUI:
 
         buttonframe.pack(fill='x')
 
+        """Separate frame for labels"""
+
         self.labelframe = tk.Frame(self.window, width=200, height=410)
         self.labelframe.pack(fill='x')
 
         self.window.mainloop()
+    
 
+    """Stops application"""
     def stop_app(self):
         
         self.window.destroy()
 
+    """Gui for searhing in list"""
     def search_list(self):
 
         self.clear_labelframe()
@@ -70,11 +77,11 @@ class MyGUI:
         self.ok_button.pack()
             
         self.user_in = self.input_field
+    
+    """Executes search"""
+     def start_search(self):
 
-    def start_search(self):
-
-        
-        
+            
         self.user_in = self.user_in.get().strip()
         
         if 1 <= len(self.user_in) <= 25 :
@@ -102,7 +109,7 @@ class MyGUI:
         self.input_field.destroy()
         self.ok_button.destroy()
             
-
+    """Sorts list alphabetically"""
     def sort_list(self):
 
         self.clear_labelframe()
@@ -111,6 +118,7 @@ class MyGUI:
         label_list_sorted = tk.Label(self.labelframe, wraplength=500,width=200,text=str(fruits_and_vegetables_sorted).translate(({ord(i): None for i in "[]''"})))
         label_list_sorted.pack()
 
+    """Displays list"""
     def show_list(self):
 
         self.clear_labelframe()
@@ -118,6 +126,7 @@ class MyGUI:
         label_list = tk.Label(self.labelframe, wraplength=500,width=200,text=str(fruits_and_vegetables).translate(({ord(i): None for i in "[]''"})))
         label_list.pack()
 
+    """Gui for adding element to list, only letters allowed"""
     def add_to_list(self):
 
         self.clear_labelframe()
@@ -130,6 +139,7 @@ class MyGUI:
         self.ok_button = tk.Button(self.labelframe, text="Add item", command= self.append_list)
         self.ok_button.pack()
 
+    """Adds element to list if input is only letters"""
     def append_list(self):
 
         addition = self.to_be_added.get().strip()
@@ -154,7 +164,8 @@ class MyGUI:
         
         self.ok_button.destroy()
         self.input_field_add.destroy()
-        
+
+    """Gui for removing element from list""" 
     def gui_remove_from_list(self):
 
         self.clear_labelframe()
@@ -167,6 +178,7 @@ class MyGUI:
         self.delete_button = tk.Button(self.labelframe,text="Delete",command = self.remove_from_list)
         self.delete_button.pack()
 
+    """Removes element from list"""
     def remove_from_list(self):
         
         to_remove = self.to_be_deleted.get().strip()
@@ -187,6 +199,7 @@ class MyGUI:
         self.delete_button.destroy()
         self.to_be_deleted_in.destroy()
 
+    """Clears labelframe, used at the start of every function if labelframe =! empty"""
     def clear_labelframe(self):
         if  self.labelframe != None:
             for item in self.labelframe.winfo_children():
