@@ -103,7 +103,8 @@ class MyGUI:
                     
             
             
-            if  self.user_in not in fruits_and_vegetables and self.user_in !="":
+            if  (self.user_in not in fruits_and_vegetables and
+                self.user_in !=""):
                 print("Item not found")
                 label = tk.Label(self.labelframe,
                 text="Item: "+ str(self.user_in) + " was not found")
@@ -130,8 +131,13 @@ class MyGUI:
         fruits_and_vegetables_sorted = sorted(fruits_and_vegetables)
         label_list_sorted = tk.Label(self.labelframe, 
         wraplength=500,width=200,
-        text=str(fruits_and_vegetables_sorted).translate(({ord(i): None for i in "[]''"})))
+        text=str(fruits_and_vegetables_sorted).translate(
+        ({ord(i): None for i in "[]''"})))
         label_list_sorted.pack()
+    
+        if fruits_and_vegetables == []:
+            label_empty = tk.Label(self.labelframe, text="List is empty")
+            label_empty.pack()
 
     """Displays unsorted list"""
     def show_list(self):
@@ -139,8 +145,13 @@ class MyGUI:
         self.clear_labelframe()
 
         label_list = tk.Label(self.labelframe, wraplength=500,width=200,
-        text=str(fruits_and_vegetables).translate(({ord(i): None for i in "[]''"})))
+        text=str(fruits_and_vegetables).translate(
+        ({ord(i): None for i in "[]''"})))
         label_list.pack()
+
+        if fruits_and_vegetables == []:
+            label_empty = tk.Label(self.labelframe, text="List is empty")
+            label_empty.pack()
 
     """Gui for adding element to list, only letters allowed"""
     def add_to_list(self):
