@@ -174,28 +174,32 @@ class MyGUI:
 
         self.ok_button.destroy()
         self.input_field_add.destroy()
-        if addition not in fruits_and_vegetables:
-            additionlen = len(addition)
-            if 1 <= additionlen <= 25 and addition.isalpha() == True:
-                if addition != "" and (additionlen <= 25):
-                    fruits_and_vegetables.append(addition)
-                    added = tk.Label(self.labelframe,
-                    text= "Added "+str(addition)+" succesfully")
-                    added.pack()
-                
-            if addition == "":
-                no_add = tk.Label(text= "There is nothing to add")
-                no_add.pack()
-            
-            if addition.isalpha() == False:
-                in_char = tk.Label(self.labelframe, 
-                text= "Incorrect amount or type of characters")
-                in_char.pack()
-            
-        if addition in fruits_and_vegetables:
-            in_lst = tk.Label(self.labelframe, 
+        
+        additionlen = len(addition)
+        if 1 <= additionlen <= 25 and addition.isalpha() == True:
+            if addition in fruits_and_vegetables:
+                in_lst = tk.Label(self.labelframe, 
                 text= "Item already in list")
                 in_lst.pack()
+            
+            if (addition != "" and (additionlen <= 25) and
+                addition not in fruits_and_vegetables):
+
+                fruits_and_vegetables.append(addition)
+                added = tk.Label(self.labelframe,
+                text= "Added "+str(addition)+" succesfully")
+                added.pack()
+             
+        if addition.isalpha() == False:
+            in_char = tk.Label(self.labelframe, 
+            text= "Incorrect amount or type of characters")
+            in_char.pack()
+            
+        if addition == "":
+            no_add = tk.Label(self.labelframe,text= "There is nothing to add")
+            no_add.pack()
+            
+        
     
         self.ok_button.destroy()
         self.input_field_add.destroy()
