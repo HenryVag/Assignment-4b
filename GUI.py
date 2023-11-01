@@ -244,6 +244,11 @@ class MyGUI:
             text= "Incorrect amount of characters, please try again")
         
             in_char.pack()
+        
+        if to_remove == "":
+            no_rem = tk.Label(self.labelframe,
+            text= "There is nothing to remove with")
+            no_rem.pack()
 
         self.delete_button.destroy()
         self.to_be_deleted_in.destroy()
